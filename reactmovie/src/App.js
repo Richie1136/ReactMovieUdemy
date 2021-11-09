@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <section>
-        <button>Fetch Movies</button>
+        <button onClick={fetchMovies}>Fetch Movies</button>
       </section>
       <section>
         <MoviesList movies={movies} />
