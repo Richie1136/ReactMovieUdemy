@@ -30,7 +30,8 @@ function App() {
         <button onClick={fetchMovies}>Fetch Movies</button>
       </section>
       <section>
-        {!loading && <MoviesList movies={movies} />}
+        {!loading && movies.length > 0 && <MoviesList movies={movies} />}
+        {!loading && movies.length === 0 && <p>Found no movies</p>}
         {loading && <p>Loading</p>}
       </section>
     </>
