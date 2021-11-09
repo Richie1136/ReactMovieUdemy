@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import axios from 'axios'
 import MoviesList from './components/movielist/MoviesList'
 import './App.css';
 
@@ -11,9 +11,9 @@ function App() {
   const fetchMovies = async () => {
     try {
       setLoading(true)
-      const response = await fetch('https://swapi.dev/api/films/')
-      const data = await response.json()
-      const transformMovies = data.results.map(movieData => {
+      const response = await axios('https://swapi.dev/api/films/')
+      const data = await response.data.results
+      const transformMovies = data.map(movieData => {
         return {
           id: movieData.episode_id,
           title: movieData.title,
@@ -22,10 +22,10 @@ function App() {
         }
       })
       setMovies(transformMovies)
-      setLoading(false)
     } catch (err) {
       return err
     }
+    setLoading(false)
   }
 
   return (
