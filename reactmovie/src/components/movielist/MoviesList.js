@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Movie from '../movie/Movie'
-import classes from './MoviesList.module.css';
+import './MoviesList.css';
 
 const MovieList = ({ movies }) => {
   return (
-    <ul className={classes['movies-list']}>
+    <ul className='movies-list'>
       {movies.map((movie) => (
         <Movie
           key={movie.id}
