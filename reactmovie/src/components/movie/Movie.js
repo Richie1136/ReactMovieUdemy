@@ -2,12 +2,12 @@ import React from 'react';
 
 import './Movie.css';
 
-const Movie = ({ title, release_date, opening_crawl }) => {
+const Movie = ({ title, releaseDate, openingText }) => {
   return (
     <li className='movie'>
       <h2>{title}</h2>
-      <h3>{release_date}</h3>
-      <p>{opening_crawl}</p>
+      <h3>{releaseDate}</h3>
+      <p>{openingText}</p>
     </li>
   );
 };
