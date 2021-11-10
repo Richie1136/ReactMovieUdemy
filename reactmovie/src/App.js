@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios'
 import MoviesList from './components/movielist/MoviesList'
 import './App.css';
@@ -8,7 +8,9 @@ function App() {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(false)
 
-  const fetchMovies = async () => {
+
+
+  const fetchMovies = useCallback(async () => {
     try {
       setLoading(true)
       const response = await axios('https://swapi.dev/api/films/')
@@ -26,7 +28,11 @@ function App() {
       return err
     }
     setLoading(false)
-  }
+  }, [])
+
+  useEffect(() => {
+    fetchMovies()
+  }, [fetchMovies])
 
   let content = <p>Found no movies</p>
 
