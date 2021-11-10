@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios'
 import MoviesList from './components/movielist/MoviesList'
+import AddMovie from './components/addmovie/AddMovie';
 import './App.css';
 
 function App() {
@@ -34,6 +35,10 @@ function App() {
     fetchMovies()
   }, [fetchMovies])
 
+  const addMovie = (movie) => {
+    console.log(movie)
+  }
+
   let content = <p>Found no movies</p>
 
   if (movies.length > 0) {
@@ -47,6 +52,7 @@ function App() {
   return (
     <>
       <section>
+        <AddMovie onAddMovie={addMovie} />
         <button onClick={fetchMovies}>Fetch Movies</button>
       </section>
       <section>{content}</section>
