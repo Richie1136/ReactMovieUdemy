@@ -14,7 +14,7 @@ function App() {
   const fetchMovies = useCallback(async () => {
     try {
       setLoading(true)
-      const response = await axios('https://swapi.dev/api/films/')
+      const response = await axios('https://react-movies-54a72-default-rtdb.firebaseio.com/movies.json')
       const data = await response.data.results
       const transformMovies = data.map(movieData => {
         return {
@@ -35,7 +35,10 @@ function App() {
     fetchMovies()
   }, [fetchMovies])
 
-  const addMovie = (movie) => {
+  const addMovie = async (movie) => {
+    const response = await axios.post('https://react-movies-54a72-default-rtdb.firebaseio.com/movies.json', {
+      body: JSON.stringify(movie)
+    })
     console.log(movie)
   }
 
