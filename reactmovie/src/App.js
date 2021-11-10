@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios'
 import MoviesList from './components/movielist/MoviesList'
 import AddMovie from './components/addmovie/AddMovie';
 import './App.css';
@@ -14,17 +13,21 @@ function App() {
   const fetchMovies = useCallback(async () => {
     try {
       setLoading(true)
-      const response = await axios('https://react-movies-54a72-default-rtdb.firebaseio.com/movies.json')
-      const data = await response.data.results
-      const transformMovies = data.map(movieData => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date
-        }
-      })
-      setMovies(transformMovies)
+      const response = await fetch('https://react-movies-54a72-default-rtdb.firebaseio.com/movies.json')
+      const data = await response.json()
+
+      const loadedMovies = []
+
+      for (const key in data) {
+        loadedMovies.push({
+          id: key,
+          title: data[key].title,
+          openingText: data[key].openingText,
+          releaseDate: data[key].releaseDate
+        })
+      }
+      console.log(data)
+      setMovies(loadedMovies)
     } catch (err) {
       return err
     }
@@ -36,10 +39,19 @@ function App() {
   }, [fetchMovies])
 
   const addMovie = async (movie) => {
-    const response = await axios.post('https://react-movies-54a72-default-rtdb.firebaseio.com/movies.json', {
-      body: JSON.stringify(movie)
-    })
-    console.log(movie)
+    try {
+      const response = await fetch('https://react-movies-54a72-default-rtdb.firebaseio.com/movies.json', {
+        method: 'POST',
+        body: JSON.stringify(movie),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json()
+      console.log(data)
+    } catch (err) {
+      return err
+    }
   }
 
   let content = <p>Found no movies</p>
